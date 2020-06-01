@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using DevTrends.MvcDonutCaching.Demo.Models;
 using DevTrends.MvcDonutCaching.Demo.Mvc;
 using Newtonsoft.Json;
 
@@ -12,7 +13,18 @@ namespace DevTrends.MvcDonutCaching.Demo.Controllers
     {
         public ActionResult Index()
         {
-            return RedirectToAction("Simple");
+            // return RedirectToAction("Simple");
+            return RedirectToAction("Genesis");
+        }
+
+        [DonutOutputCache(Duration = 60)]
+        public ActionResult Genesis()
+        {
+            return View(new Genesis
+            {
+                TierTwoData = Guid.NewGuid().ToString(),
+                TierThreeData = DateTime.Now.Ticks.ToString()
+            });
         }
 
         //

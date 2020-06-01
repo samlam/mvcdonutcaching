@@ -1,13 +1,20 @@
 ﻿using JetBrains.Annotations;
+using System.Security.Policy;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 
 namespace DevTrends.MvcDonutCaching
 {
-    public static class HtmlHelperExtensions
+    public static partial class HtmlHelperExtensions
     {
+        //private static string ActionMarker = "action";
         private static IActionSettingsSerialiser _serialiser;
+
+        static HtmlHelperExtensions()
+        {
+
+        }
 
         /// <summary>
         /// Gets or sets the serialiser.
@@ -19,7 +26,8 @@ namespace DevTrends.MvcDonutCaching
         {
             get
             {
-                return _serialiser ??  (_serialiser = new EncryptingActionSettingsSerialiser(new ActionSettingsSerialiser(), new Encryptor()));
+                //return _serialiser ??  (_serialiser = new EncryptingActionSettingsSerialiser(new ActionSettingsSerialiser(), new Encryptor()));
+                return _serialiser ?? (_serialiser = new ActionSettingsSerialiser()); // temporary
             }
             set
             {
@@ -167,16 +175,11 @@ namespace DevTrends.MvcDonutCaching
             if (excludeFromParentCache)
             {
                 var serialisedActionSettings = GetSerialisedActionSettings(actionName, controllerName, routeValues);
-
-                h.ViewContext.Writer.Write("<!--Donut#{0}#-->", serialisedActionSettings);
+                h.ViewContext.Writer.Write(DonutHoleFiller.DonutMarker, DonutHoleFiller.ActionMarker, serialisedActionSettings, h.Action(actionName, controllerName, routeValues));
             }
+            else
+                h.RenderAction(actionName, controllerName, routeValues);
 
-            h.RenderAction(actionName, controllerName, routeValues);
-
-            if (excludeFromParentCache)
-            {
-                h.ViewContext.Writer.Write("<!--EndDonut-->");
-            }
         }
 
         /// <summary>
@@ -194,7 +197,7 @@ namespace DevTrends.MvcDonutCaching
             {
                 var serialisedActionSettings = GetSerialisedActionSettings(actionName, controllerName, routeValues);
 
-                return new MvcHtmlString(string.Format("<!--Donut#{0}#-->{1}<!--EndDonut-->", serialisedActionSettings, h.Action(actionName, controllerName, routeValues)));
+                return new MvcHtmlString(string.Format(DonutHoleFiller.DonutMarker, DonutHoleFiller.ActionMarker, serialisedActionSettings, h.Action(actionName, controllerName, routeValues)));
             }
 
             return h.Action(actionName, controllerName, routeValues);

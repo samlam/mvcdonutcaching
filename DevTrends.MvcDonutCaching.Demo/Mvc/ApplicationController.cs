@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 using Autofac;
-using DevTrends.MvcDonutCaching.Annotations;
+using JetBrains.Annotations;
 
 namespace DevTrends.MvcDonutCaching.Demo.Mvc
 {

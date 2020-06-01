@@ -35,7 +35,7 @@ namespace DevTrends.MvcDonutCaching
             this(
                new KeyGenerator(keyBuilder),
                new OutputCacheManager(OutputCache.Instance, keyBuilder),
-               new DonutHoleFiller(HtmlHelperExtensions.Serialiser),
+               new DonutHoleFiller(HtmlHelperExtensions.Serialiser, HtmlHelperExtensions.PartialSerializer),
                new CacheSettingsManager(),
                new CacheHeadersHelper()
         )

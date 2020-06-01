@@ -23,6 +23,12 @@ namespace DevTrends.MvcDonutCaching
             _keyBuilder = keyBuilder;
         }
 
+        public static void Register(Type serializableType, Type surrogateType)
+        {
+            // this is not used yet
+            ProtoBuf.Meta.RuntimeTypeModel.Default.Add(serializableType, false).SetSurrogate(surrogateType);
+        }
+
         /// <summary>
         /// Gets the key builder.
         /// </summary>

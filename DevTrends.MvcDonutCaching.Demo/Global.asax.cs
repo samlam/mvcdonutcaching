@@ -4,6 +4,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
+using DevTrends.MvcDonutCaching.Demo.Surrogates;
 
 namespace DevTrends.MvcDonutCaching.Demo
 {
@@ -24,6 +25,8 @@ namespace DevTrends.MvcDonutCaching.Demo
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             Container = RegisterAutofac();
+
+            OutputCacheManager.Register(typeof(Models.Genesis), typeof(GensisSurrogate));
         }
 
         private static IContainer RegisterAutofac()

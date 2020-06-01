@@ -1,0 +1,45 @@
+﻿@model DevTrends.MvcDonutCaching.Demo.Models.Genesis
+
+@{
+    ViewBag.Title = "Genesis";
+}
+
+<h2>Genesis</h2>
+
+<div>
+    <h4>Genesis</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TierOneData)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TierOneData)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TierTwoData)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TierTwoData)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TierThreeData)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TierThreeData)
+        </dd>
+
+    </dl>
+</div>
+<hr />
+
+@Html.PartialView("Partials/TierTwoPartial", false)
+
+<hr />
+
+@Html.PartialView("Partials/TierTwo2ndPartial", true)

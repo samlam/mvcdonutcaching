@@ -11,6 +11,7 @@ namespace DevTrends.MvcDonutCaching
     {
         private readonly OutputCacheProvider _outputCacheProvider;
         private readonly IKeyBuilder _keyBuilder;
+        private static Type[] _cacheTypes;
 
         public OutputCacheManager()
             : this(OutputCache.Instance, new KeyBuilder())
@@ -23,10 +24,19 @@ namespace DevTrends.MvcDonutCaching
             _keyBuilder = keyBuilder;
         }
 
-        public static void Register(Type serializableType, Type surrogateType)
+        public static void Register(params Type[] cacheTypes)
         {
-            // this is not used yet
-            ProtoBuf.Meta.RuntimeTypeModel.Default.Add(serializableType, false).SetSurrogate(surrogateType);
+            _cacheTypes = cacheTypes;
+        }
+        //public static void Register(Type serializableType, Type surrogateType)
+        //{
+        //    // this is not used yet
+        //    ProtoBuf.Meta.RuntimeTypeModel.Default.Add(serializableType, false).SetSurrogate(surrogateType);
+        //}
+
+        public static Type[] CacheTypes
+        {
+            get { return _cacheTypes; }
         }
 
         /// <summary>

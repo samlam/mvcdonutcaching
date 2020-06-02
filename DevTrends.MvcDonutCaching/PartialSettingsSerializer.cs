@@ -51,9 +51,9 @@ namespace DevTrends.MvcDonutCaching
     {
         private readonly DataContractSerializer _serialiser;
 
-        public PartialSettingsDCSerializer()
+        public PartialSettingsDCSerializer(params Type[] cacheTypes)
         {
-            _serialiser = new DataContractSerializer(typeof(PartialSettings), new[] { typeof(ViewDataDictionary) });
+            _serialiser = new DataContractSerializer(typeof(PartialSettings), cacheTypes);
         }
 
         public string Serialize(PartialSettings partialSettings)
@@ -73,6 +73,16 @@ namespace DevTrends.MvcDonutCaching
                     writer.Flush();
                     return Convert.ToBase64String(ms.ToArray());
                 }
+
+                //try
+                //{
+                //    _serialiser.WriteObject(ms, partialSettings);
+                //}
+                //catch (Exception e)
+                //{
+                //    throw;
+                //}
+                //return Convert.ToBase64String(ms.ToArray());
             }
         }
 
@@ -84,6 +94,7 @@ namespace DevTrends.MvcDonutCaching
                 {
                     return (PartialSettings)_serialiser.ReadObject(reader);
                 }
+                //return (PartialSettings)_serialiser.ReadObject(memoryStream);
             }
         }
     }

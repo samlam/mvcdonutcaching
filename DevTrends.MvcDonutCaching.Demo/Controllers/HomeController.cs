@@ -17,13 +17,13 @@ namespace DevTrends.MvcDonutCaching.Demo.Controllers
             return RedirectToAction("Genesis");
         }
 
-        [DonutOutputCache(Duration = 60)]
+        [DonutOutputCache(Duration = 5)]
         public ActionResult Genesis()
         {
             return View(new Genesis
             {
                 TierTwoData = Guid.NewGuid().ToString(),
-                TierThreeData = DateTime.Now.Ticks.ToString()
+                TierThreeData = new TierThree()
             });
         }
 

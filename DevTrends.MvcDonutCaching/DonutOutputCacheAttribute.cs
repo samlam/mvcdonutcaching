@@ -199,15 +199,12 @@ namespace DevTrends.MvcDonutCaching
                         Content = DonutHoleFiller.ReplaceDonutHoleContent(cachedItem.Content, filterContext, CacheSettings.Options),
                         ContentType = cachedItem.ContentType
                     };
+                    // we already injected something to Result, let's exit
+                    return;
                 }
             }
 
-            // Did we already injected something ?
-            if (filterContext.Result != null)
-            {
-                return; // No need to continue 
-            }
-
+            
             // We are hooking into the pipeline to replace the response Output writer
             // by something we own and later eventually gonna cache
             var cachingWriter = new StringWriter(CultureInfo.InvariantCulture);

@@ -17,43 +17,54 @@ namespace DevTrends.MvcDonutCaching
 {
     public static partial class HtmlHelperExtensions
     {
-        private static IPartialSettingsSerializer _serializer;
+        private static IPartialSettingsSerializer _partialSerializer;
         public static IPartialSettingsSerializer PartialSerializer
         {
             get
             {
-                return _serializer ?? (_serializer = new PartialSettingsDCSerializer());
+                if (_partialSerializer == null)
+                {
+                    //var cList = OutputCacheManager.CacheTypes.ToList();
+                    //cList.Add(typeof(ViewDataDictionary));
+                    // _partialSerializer = new PartialSettingsDCSerializer(cList.ToArray());
+                    _partialSerializer = new PartialSettingsSerializer();
+                }
+                return _partialSerializer;
             }
             set
             {
-                _serializer = value;
+                _partialSerializer = value;
             }
         }
 
-        public static MvcHtmlString PartialView(this HtmlHelper h, string partialViewName, bool excludeFromParentCache)
+        public static MvcHtmlString Partial(this HtmlHelper h, string partialViewName, bool excludeFromParentCache)
+        {
+            return h.Partial(partialViewName, null, excludeFromParentCache);
+        }
+        public static MvcHtmlString Partial(this HtmlHelper h, string partialViewName, object model, bool excludeFromParentCache)
         {
             var actionName = h.ViewContext.RouteData.Values["action"].ToString();
             var controllerName = h.ViewContext.Controller.GetType().Name;
             var routeValues = h.ViewContext.RouteData.Values;
 
-
             if (excludeFromParentCache)
             {
-                //MvcHtmlString fragment = h.Action(actionName, controllerName, routeValues);
-                var serializedPartialSettings = GetSerialisedPartialSettings(partialViewName, h.ViewData);
-                MvcHtmlString fragment = h.Partial(partialViewName, h.ViewData.Model, h.ViewData); 
+                object modelInfo = model ?? h.ViewData.Model;
+                var serializedPartialSettings = GetSerialisedPartialSettings(partialViewName, modelInfo, h.ViewData);
+                MvcHtmlString fragment = h.Partial(partialViewName, modelInfo, h.ViewData); 
                 return new MvcHtmlString(string.Format(DonutHoleFiller.DonutMarker, DonutHoleFiller.PartialMarker, serializedPartialSettings, fragment));
             }
 
             return h.Partial(partialViewName);
         }
 
-        private static string GetSerialisedPartialSettings(string partialViewName, ViewDataDictionary viewData)
+        private static string GetSerialisedPartialSettings(string partialViewName, object model, ViewDataDictionary viewData)
         {
             var partialSettings = new PartialSettings
             {
                 PartialViewName = partialViewName,
-                ViewData = viewData
+                Model = model,
+                ModelTypeName = viewData.Model.GetType().FullName
             };
 
             return PartialSerializer.Serialize(partialSettings);

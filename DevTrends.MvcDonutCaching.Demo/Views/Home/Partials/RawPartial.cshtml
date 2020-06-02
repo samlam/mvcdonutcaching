@@ -1,0 +1,22 @@
+﻿@model DevTrends.MvcDonutCaching.Demo.Models.Genesis
+
+@{
+    // Model.TierThreeData = Model.TierTwoData + " - " + DateTime.Now.Ticks.ToString();
+}
+
+<div style="margin:auto; width:80%; border-width: 4px; border-color: gray;border-style: solid;">
+    <h4>Raw Partial with Tier One data</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TierOneData)
+        </dt>
+
+        <dd>
+            @Model.TierOneData
+        </dd>
+
+    </dl>
+</div>
+<p>
+</p>

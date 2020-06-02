@@ -1,5 +1,9 @@
 ﻿@model DevTrends.MvcDonutCaching.Demo.Models.Genesis
 
+@{
+    Model.TierTwoData = DateTime.Now.Ticks.ToString();
+}
+
 <div style="background: lightgray;margin:auto; width:80%">
     <h4>Tier Two 2nd Partial</h4>
     <hr />
@@ -9,7 +13,7 @@
         </dt>
 
         <dd>
-            @DateTime.Now.Ticks.ToString()
+            @Model.TierTwoData
         </dd>
 
     </dl>

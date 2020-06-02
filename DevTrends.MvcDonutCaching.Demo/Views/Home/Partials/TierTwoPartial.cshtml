@@ -14,7 +14,7 @@
 
         </dl>
 
-        @Html.PartialView("Partials/TierThreePartial", true)
+        @Html.Partial("Partials/TierThreePartial", Model.TierThreeData, excludeFromParentCache: true)
     </div>
 <p>
 </p>

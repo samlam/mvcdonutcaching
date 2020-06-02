@@ -11,11 +11,23 @@ namespace DevTrends.MvcDonutCaching.Demo.Models
         [DataMember(Order = 2)]
         public string TierTwoData { get; set; }
         [DataMember(Order = 3)]
-        public string TierThreeData { get; set; }
+        public TierThree TierThreeData { get; set; }
 
         public Genesis()
         {
             TierOneData = $"initialized @ {DateTime.Now.ToString()}";
+        }
+    }
+
+    [Serializable]
+    public class TierThree
+    {
+        [DataMember(Order = 1)]
+        public string Data { get; set; }
+
+        public TierThree()
+        {
+            Data = $"initialized @ {DateTime.Now.ToString()}";
         }
     }
 }

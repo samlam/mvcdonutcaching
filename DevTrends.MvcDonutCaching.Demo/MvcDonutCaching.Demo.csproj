@@ -190,6 +190,7 @@
     <Content Include="Views\Home\Partials\TierTwoPartial.cshtml" />
     <Content Include="Views\Home\Partials\TierTwo2ndPartial.cshtml" />
     <Content Include="Views\Home\Partials\TierThreePartial.cshtml" />
+    <Content Include="Views\Home\Partials\RawPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\SimpleDonutOne.cshtml" />

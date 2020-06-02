@@ -69,7 +69,10 @@ namespace DevTrends.MvcDonutCaching
                 }
 
                 var partialSettings = _partialSettingsSerializer.Deserialize(fragment);
-                return InvokePartial(filterContext.Controller, partialSettings.PartialViewName, partialSettings.ViewData);
+
+                return InvokePartial(filterContext.Controller
+                    , partialSettings.PartialViewName
+                    , new ViewDataDictionary(partialSettings.Model) { { "Title", partialSettings.Model } });
             });
         }
 

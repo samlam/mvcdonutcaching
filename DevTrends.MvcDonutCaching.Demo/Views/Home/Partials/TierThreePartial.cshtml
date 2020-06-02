@@ -1,15 +1,19 @@
-﻿@model DevTrends.MvcDonutCaching.Demo.Models.Genesis
+﻿@model DevTrends.MvcDonutCaching.Demo.Models.TierThree
+
+@{
+    Model.Data = DateTime.Now.Ticks.ToString();
+}
 
 <div style="background: gray;margin:auto; width:80%">
     <h4>Tier Three Partial</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.TierThreeData)
+            @Html.DisplayNameFor(model => model.Data)
         </dt>
 
         <dd>
-            @DateTime.Now.Ticks.ToString()
+            @Model.Data
         </dd>
 
     </dl>

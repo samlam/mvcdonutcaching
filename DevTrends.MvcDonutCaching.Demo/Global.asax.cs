@@ -26,7 +26,8 @@ namespace DevTrends.MvcDonutCaching.Demo
 
             Container = RegisterAutofac();
 
-            OutputCacheManager.Register(typeof(Models.Genesis), typeof(GensisSurrogate));
+            // OutputCacheManager.Register(new[] { typeof(Models.Genesis)});
+            // OutputCacheManager.Register(typeof(Models.Genesis), typeof(GensisSurrogate));
         }
 
         private static IContainer RegisterAutofac()
